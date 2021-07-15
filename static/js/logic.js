@@ -13,7 +13,7 @@ accessToken: API_KEY
 }).addTo(myMap);
 
 // Fet the url for the earthquake data
-var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
 
 // Define a function to determine size of marker reflecting the magnitude of the earthquake.
 function markerSize(mag) {
@@ -51,7 +51,7 @@ function createCircleMarker(feature,latlng) {
         opacity: 1,
         fillOpacity: 0.8
     }
-    return.L.circleMaker(latlng,makerOptions);
+    return L.circleMaker(latlng,makerOptions);
 };
 
 // Use json request to fetch the data from the URL
@@ -75,12 +75,13 @@ d3.json(queryUrl,function(data){
         var legend: L.control({position: "bottomright"});
         legend.onAdd = function() {
             var div: L.DomUtil.create ("div", "info legend"),
-            grades = [0,1,2,3,4,5]
-            labels = [],
+                grades = [0,1,2,3,4,5]
+                labels = [],
 
         // Loop and generate labels
         for (var i=0; i < grades.length; i++) {
-            div.innerHTML += "<i style= "background:"+ getColors(grades[i]) + " "></i> " +
+            div.innerHTML += 
+            "<i style= "background:"+ getColors(grades[i]) + " "></i> " +
             grades[i] + (grades[i+1] ? "&ndash;" + grades[i+1] + "<br>" : "+");
         }
         return div;
