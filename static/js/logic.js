@@ -5,14 +5,14 @@ var myMap = L.map("map", {
   });
 
 // Add the light layer tile 
-var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    tileSize: 512,
-    maxZoom: 18,
-    zoomOffset: -1,
-    id: "mapbox.light",
-    accessToken: API_KEY
-  });
+L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+  attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+  tileSize: 512,
+  maxZoom: 18,
+  zoomOffset: -1,
+  id: "mapbox/light-v10",
+  accessToken: API_KEY
+}).addTo(myMap);
 
 // Fet the url for the earthquake data
 var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
@@ -61,7 +61,7 @@ d3.json(queryUrl,function(data){
     console.log(data)
 
     var earthquakes = data.features
-    console.log(earthquakes)
+    // console.log(earthquakes)
 
     // Loop through the data to create Mrkers and Popup
     earthquakes.forEach(function(result){
