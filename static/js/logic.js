@@ -5,20 +5,22 @@ var myMap = L.map("map", {
   });
 
 // Add the light layer tile 
-L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
-attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-maxZoom: 18,
-id: "mapbox.light",
-accessToken: API_KEY
-}).addTo(myMap);
+var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    tileSize: 512,
+    maxZoom: 18,
+    zoomOffset: -1,
+    id: "mapbox.light",
+    accessToken: API_KEY
+  });
 
 // Fet the url for the earthquake data
-var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson"
+var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 // Define a function to determine size of marker reflecting the magnitude of the earthquake.
-function markerSize(mag) {
-    return (magn + 1) * 2.5 ;
-}
+function markerSize(mag){
+    return mag * 5
+};
 
 // Define a function to determine colors reflecting the magnitude of the earthquake.
 function getColor(mag) {
@@ -72,17 +74,17 @@ d3.json(queryUrl,function(data){
     });
 
         // Create Legends
-        var legend: L.control({position: "bottomright"});
+        var legend = L.control({position: "bottomright"});
         legend.onAdd = function() {
-            var div: L.DomUtil.create ("div", "info legend"),
+            var div = L.DomUtil.create ("div", "info legend"),
                 grades = [0,1,2,3,4,5]
-                labels = [],
+                labels = [];
 
         // Loop and generate labels
         for (var i=0; i < grades.length; i++) {
             div.innerHTML += 
-            "<i style= "background:"+ getColors(grades[i]) + " "></i> " +
-            grades[i] + (grades[i+1] ? "&ndash;" + grades[i+1] + "<br>" : "+");
+            '<i style="background:' + getColors(grades[i]) + '"></i> ' +
+            grades[i] + (grades[i +1 ] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
         }
         return div;
     };
